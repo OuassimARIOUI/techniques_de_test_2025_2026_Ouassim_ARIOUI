@@ -107,7 +107,7 @@ Le client envoie une requête GET `/triangulate/{pointSetId}`
     PointSetManager-->>Triangulator: Données binaires PointSet
     Triangulator-->>Client: Triangles (format binaire)
 Ce diagramme illustre le flux logique testé dans les scénarios d’intégration.
-```
+
 ## 5. Tests de performance
 
 Les tests de performance évaluent la **vitesse**, la **scalabilité** et l’**efficacité mémoire** du service.  
