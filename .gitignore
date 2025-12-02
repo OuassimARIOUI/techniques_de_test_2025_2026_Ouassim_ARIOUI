@@ -1,0 +1,15 @@
+# Python virtual envs
+venv/
+implementation/venv/
+*/venv/
+**/venv/
+
+# Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS / IDE
+.idea/
+.vscode/
