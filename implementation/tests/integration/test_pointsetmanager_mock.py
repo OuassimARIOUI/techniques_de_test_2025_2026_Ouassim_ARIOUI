@@ -14,4 +14,6 @@ def test_psm_corrupted_response():
     corrupted = b"\xFF\x00"
     # Normally decode_pointset should fail on this
     from triangulator.binary_utils import decode_pointset
-    decode_pointset(corrupted)
+    import pytest
+    with pytest.raises(ValueError):
+        decode_pointset(corrupted)

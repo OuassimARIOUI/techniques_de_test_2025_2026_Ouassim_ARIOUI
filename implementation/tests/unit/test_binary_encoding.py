@@ -10,18 +10,22 @@ def test_decode_simple_pointset():
 def test_decode_wrong_size():
     # announces 3 points but provides only 2
     data = struct.pack("Iffff", 3, 1.0, 2.0, 3.0, 4.0)
-    decode_pointset(data)   # must fail
+    import pytest
+    with pytest.raises(ValueError):
+        decode_pointset(data)
 
 def test_decode_nan_values():
+    import pytest
     nan = float("nan")
     data = struct.pack("Iff", 1, nan, 2.0)
-    decode_pointset(data)   # must fail
+    with pytest.raises(ValueError):
+        decode_pointset(data)
 
 def test_encode_simple_triangle():
     triangles = [(0,1,2)]
     binary = encode_triangles(triangles)
     # Expected format: count + indices
-    expected = struct.pack("IIII", 0,0,1,2)
+    expected = struct.pack("IIII", 1, 0, 1, 2)
     assert binary == expected
 
 def test_encode_multiple_triangles():
@@ -31,5 +35,7 @@ def test_encode_multiple_triangles():
     assert tcount == 2
 
 def test_decode_corrupted_binary():
+    import pytest
     corrupted = b"\x00\x00\x00\x02\xFF\xFF\xAA"  # invalid binary
-    decode_pointset(corrupted)
+    with pytest.raises(ValueError):
+        decode_pointset(corrupted)
