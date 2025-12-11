@@ -1,19 +1,20 @@
-VENV_PYTHON = $(shell which python3)
+PY ?= python
 
 test:
-	$(VENV_PYTHON) -m pytest -v
+	$(PY) -m pytest -v
 
 unit_test:
-	$(VENV_PYTHON) -m pytest -v -m "not perf"
+	$(PY) -m pytest -v -m "not perf"
 
 perf_test:
-	$(VENV_PYTHON) -m pytest -v -m "perf"
+	$(PY) -m pytest -v -m "perf"
 
 coverage:
-	$(VENV_PYTHON) -m coverage run -m pytest && coverage report
+	$(PY) -m coverage run -m pytest && $(PY) -m coverage report -m
 
 lint:
-	$(VENV_PYTHON) -m ruff check triangulator
+	$(PY) -m ruff check triangulator
 
 doc:
-	$(VENV_PYTHON) -m pdoc3 --html triangulator --output-dir docs
+	$(PY) -m pdoc3 --html triangulator --output-dir docs
+
