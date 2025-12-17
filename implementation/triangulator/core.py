@@ -1,5 +1,10 @@
 
-from typing import List, Tuple
+"""
+Core triangulation utilities.
+
+This module provides a simple ear-clipping based triangulation used in the
+exercise tests.
+"""
 
 
 def _area(a, b, c):
@@ -17,12 +22,12 @@ def _point_in_triangle(pt, a, b, c):
     return 0 <= a1 <= 1 and 0 <= a2 <= 1 and 0 <= a3 <= 1
 
 
-def triangulate_points(points: List[Tuple[float, float]]):
-    """Triangulate a simple polygon given by `points` in order using ear-clipping.
+def triangulate_points(points: list[tuple[float, float]]):
+    """
+    Triangulate a simple polygon given by `points` in order using ear-clipping.
 
-    Returns list of triples of indices. Raises ValueError for invalid inputs
-    (duplicates, collinear set when tri impossible).
-    If less than 3 points, returns empty list.
+    Returns list of triples of indices. For insufficient points the function
+    returns an empty list.
     """
     if points is None:
         raise ValueError("points is None")

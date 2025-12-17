@@ -1,5 +1,5 @@
-from triangulator.binary_utils import decode_pointset
 import pytest
+from triangulator.binary_utils import decode_pointset
 
 
 def test_invalid_header():

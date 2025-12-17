@@ -1,19 +1,29 @@
-import requests
 from triangulator.api import app
 
-def test_psm_unreachable():
-    # simulate unreachable PSM
-    try:
-        requests.get("http://localhost:9999/not_exist", timeout=0.001)
-    except Exception:
-        pass
-    # later API must return 503
 
-def test_psm_corrupted_response():
-    # simulate corrupted binary returned by PSM
+class _Resp:
+    def __init__(self, status_code, content=b""):
+        self.status_code = status_code
+        self.content = content
+
+
+def test_psm_unreachable(monkeypatch):
+    def fake_get(url, timeout=1.0):
+        raise Exception("connect error")
+
+    monkeypatch.setattr('requests.get', fake_get)
+    client = app.test_client()
+    r = client.get("/triangulate/anyid")
+    assert r.status_code == 503
+
+
+def test_psm_corrupted_response(monkeypatch):
     corrupted = b"\xFF\x00"
-    # Normally decode_pointset should fail on this
-    from triangulator.binary_utils import decode_pointset
-    import pytest
-    with pytest.raises(ValueError):
-        decode_pointset(corrupted)
+
+    def fake_get(url, timeout=1.0):
+        return _Resp(200, content=corrupted)
+
+    monkeypatch.setattr('requests.get', fake_get)
+    client = app.test_client()
+    r = client.get("/triangulate/anyid")
+    assert r.status_code == 502

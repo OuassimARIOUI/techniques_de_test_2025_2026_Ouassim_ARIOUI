@@ -1,4 +1,4 @@
-PY ?= python
+PY ?= python3
 
 test:
 	$(PY) -m pytest -v
@@ -16,5 +16,6 @@ lint:
 	$(PY) -m ruff check triangulator
 
 doc:
-	$(PY) -m pdoc3 --html triangulator --output-dir docs
+	$(PY) -m pdoc --html triangulator --output-dir docs
+
 

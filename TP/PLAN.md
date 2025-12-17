@@ -172,13 +172,9 @@ project/
 │   │   ├── test_api_endpoints.py
 │   │   └── test_pointsetmanager_mock.py
 │   ├── perf/
-│   │   ├── test_perf_triangulation.py
-│   │   └── test_perf_serialization.py
-│   └── fixtures/
-│       ├── triangle.pset
-│       ├── square.pset
-│       └── spiral.pset
-│
+│       ├── test_perf_triangulation.py
+│       └── test_perf_serialization.py       
+│              
 ├── Makefile
 ├── requirements.txt
 ├── dev_requirements.txt

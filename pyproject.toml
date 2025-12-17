@@ -8,3 +8,7 @@ select = [
     "SIM",
     "I",
 ]
+ignore = [
+    "D203",  # incompatible with D211 in some configurations
+    "D212",  # incompatible with D213 in some configurations
+]

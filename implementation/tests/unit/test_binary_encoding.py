@@ -1,5 +1,7 @@
 import struct
+
 from triangulator.binary_utils import decode_pointset, encode_triangles
+
 
 def test_decode_simple_pointset():
     # pointset: 2 points : (1.0, 2.0), (3.0, 4.0)

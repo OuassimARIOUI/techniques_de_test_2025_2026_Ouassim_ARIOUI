@@ -1,13 +1,22 @@
-import struct
+"""
+Binary encoding/decoding helpers for PointSet and Triangles.
+
+This module provides utilities used by the tests to decode a PointSet from
+its binary representation and to encode triangle index lists into a compact
+binary form.
+"""
+
 import math
+import struct
 
 
 def decode_pointset(binary_data: bytes):
-    """Decode a PointSet from binary format.
+    """
+    Decode a PointSet from binary format.
 
     Format expected:
-      - 4 bytes unsigned long: number of points (N)
-      - N * (4 bytes float X + 4 bytes float Y)
+    - 4 bytes unsigned long: number of points (N)
+    - N * (4 bytes float X + 4 bytes float Y)
 
     Returns list of (x, y) tuples.
     Raises ValueError on invalid/corrupted input.
@@ -26,11 +35,12 @@ def decode_pointset(binary_data: bytes):
 
     expected_size = 4 + count * 8
     if len(binary_data) != expected_size:
-        raise ValueError(f"invalid data size: expected {expected_size}, got {len(binary_data)}")
+        actual = len(binary_data)
+        raise ValueError(f"invalid data size: expected {expected_size}, got {actual}")
 
     pts = []
     offset = 4
-    for i in range(count):
+    for _i in range(count):
         try:
             x, y = struct.unpack_from("ff", binary_data, offset)
         except struct.error as e:
@@ -44,10 +54,11 @@ def decode_pointset(binary_data: bytes):
 
 
 def encode_triangles(triangles):
-    """Encode triangle index list into binary: [count][i0][i1][i2]...[...]
+    """
+    Encode triangle index list into binary.
 
-    triangles: iterable of triple indices (ints)
-    Returns bytes.
+    The returned format is a 4-byte unsigned count followed by 3*4-byte
+    unsigned indices per triangle.
     """
     if triangles is None:
         raise ValueError("triangles is None")

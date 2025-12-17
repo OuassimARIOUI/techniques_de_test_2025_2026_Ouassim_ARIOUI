@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 # Ajoute le dossier "implementation" au PYTHONPATH
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
